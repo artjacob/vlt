@@ -1,0 +1,199 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// panel ///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.panel {
+	position: fixed;
+	top: $appbar-size;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	// margin: 12px;
+	border-radius: $panel-border-radius $panel-border-radius 0 0;
+	// outline: 2px dashed #f0a;
+	// padding: 24px;
+	background-color: #fff;
+	color: #000;
+	overflow: auto;
+
+	box-shadow:
+		0 -2px 4px -1px rgba(#000, 0.2),
+		0 -4px 5px 0 rgba(#000, 0.14),
+		0 -1px 10px 0 rgba(#000, 0.12);
+
+	transition: transform $transition-timing-function 0.24s;
+
+	.-mode--list & {
+		transform: translateY(calc(100vh - (#{$appbar-size} * 2)));
+	}
+
+	// Estação
+	.station {
+		height: 100%;
+		position: relative;
+
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.departures {
+		padding: $appbar-size 20px 6px;
+		font-size: 24px;
+	}
+
+	.departures-title {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: $appbar-size;
+		padding: 0 18px;
+		font-size: 18px;
+		color: #777;
+		cursor: default;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	// Sentidos
+	.direction {
+		padding: 6px 0 18px;
+	}
+
+	.direction-caption {
+		padding-left: 44px;
+		padding-bottom: 4px;
+		font-size: 16px;
+		color: #777;
+	}
+
+	// Trem
+	.train {
+		padding: 5px 0;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		&.-state--approaching {
+			animation: approaching $transition-timing-function 1.5s infinite;
+		}
+	}
+
+	.train-line {
+		padding-top: 4px;
+		padding-right: 21px;
+	}
+
+	.train-direction {
+		flex-grow: 1;
+	}
+
+	.train-eta {
+		span {
+			display: inline-block;
+			padding-left: 3px;
+			font-size: 0.8em;
+		}
+	}
+
+	.train:nth-child(2) {
+		.train-direction {
+			font-weight: 700;
+		}
+
+		.train-eta {
+			font-weight: 700;
+		}
+	}
+
+	// Estado da conexão e hora da última atualização
+	.status {
+
+	}
+
+	.status-badge {
+		border: 1px solid #777;
+		border-radius: 6px;
+		padding: 2px 6px;
+		font-size: 13px;
+		color: #777;
+		text-align: center;
+
+		&.-state--real-time {
+			border-color: $primary-color;
+			color: $primary-color;
+			text-transform: uppercase;
+		}
+
+		&.-state--no-connection {
+			border-color: $danger-color;
+			color: $danger-color;
+		}
+	}
+
+	.connection-status {
+		padding-bottom: 2px;
+	}
+
+	// Permissão
+	.permission {
+		width: 100%;
+		height: 100%;
+
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.button {
+			border: 1px solid $list-background-color;
+			border-radius: $panel-border-radius * 0.75;
+			padding: 9px 15px;
+			// background-color: $list-background-color;
+			color: $list-background-color;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&:hover {
+				background-color: rgba($list-background-color, 0.1);
+			}
+
+			span {
+				display: inline-block;
+				padding-left: 12px;
+			}
+
+			// box-shadow:
+			// 	0 1px 2px -1px rgba(#000, 0.2),
+			// 	0 2px 3px 0 rgba(#000, 0.14),
+			// 	0 1px 2px 0 rgba(#000, 0.12);
+		}
+	}
+}
+
+@keyframes approaching {
+	0% {
+		opacity: 1;
+	}
+
+	20% {
+		opacity: 1;
+	}
+
+	50% {
+		opacity: 0;
+	}
+
+	80% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 1;
+	}
+}

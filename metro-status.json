@@ -1,0 +1,74 @@
+[
+    {
+        "DataAtualizacao": "/Date(1539564799717)/",
+        "EstacaoSigla": "INH ",
+        "TipoEvento": 4,
+        "Linha": 2,
+        "InterEstacao": false,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564792983)/",
+        "EstacaoSigla": "AFP ",
+        "TipoEvento": 4,
+        "Linha": 4,
+        "InterEstacao": false,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564785810)/",
+        "EstacaoSigla": "BTF ",
+        "TipoEvento": 4,
+        "Linha": 4,
+        "InterEstacao": false,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564781660)/",
+        "EstacaoSigla": "TRG ",
+        "TipoEvento": 1,
+        "Linha": 2,
+        "InterEstacao": true,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564779650)/",
+        "EstacaoSigla": "ERP ",
+        "TipoEvento": 3,
+        "Linha": 2,
+        "InterEstacao": false,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564772863)/",
+        "EstacaoSigla": "CLG ",
+        "TipoEvento": 1,
+        "Linha": 2,
+        "InterEstacao": true,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564757267)/",
+        "EstacaoSigla": "CRC ",
+        "TipoEvento": 4,
+        "Linha": 4,
+        "InterEstacao": false,
+        "HLP": false
+    },
+    {
+        "DataAtualizacao": "/Date(1539564722763)/",
+        "EstacaoSigla": "MGR ",
+        "TipoEvento": 1,
+        "Linha": 2,
+        "InterEstacao": true,
+        "HLP": true
+    },
+    {
+        "DataAtualizacao": "/Date(1539548917603)/",
+        "EstacaoSigla": "CNV ",
+        "TipoEvento": 1,
+        "Linha": 4,
+        "InterEstacao": true,
+        "HLP": true
+    }
+]

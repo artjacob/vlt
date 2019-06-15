@@ -1,0 +1,13 @@
+[
+	"js/base.js",
+
+	"js/station-info.js",
+	"js/line-info.js",
+
+	"js/get-location.js",
+	"js/nearest-station.js",
+	"js/next-departures.js",
+	"js/station-list.js",
+
+	"js/start.js"
+]
