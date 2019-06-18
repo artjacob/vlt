@@ -13,7 +13,7 @@
 		$loading-size: 32px;
 		width: $loading-size;
 		height: $loading-size;
-		background-color: #0af;
+		background-color: $loading-animation-color;
 		animation: loading $transition-timing-function 0.9s infinite;
 	}
 }

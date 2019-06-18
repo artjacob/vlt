@@ -24,7 +24,7 @@
 			left: 6px;
 			right: 6px;
 			height: 1px;
-			background-color: rgba(#fff, 0.25);
+			background-color: $list-divider-color;
 			opacity: 0;
 			transition: opacity $transition-timing-function 0.24s;
 			content: "";
@@ -96,17 +96,15 @@
 	}
 
 	a {
-		// height: $appbar-size;
 		border-radius: $panel-border-radius * 0.75;
 		padding: 9px 12px;
-		// background-color: rgba(#fff, 0.05);
 
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 
 		&:hover {
-			background-color: rgba(#fff, 0.1);
+			background-color: $list-hover-background-color;
 		}
 	}
 
@@ -123,7 +121,7 @@
 		padding-bottom: 24px;
 
 		a {
-			border: 1px solid#fff;
+			border: 1px solid $list-text-color;
 			justify-content: center;
 
 			span {

@@ -3,23 +3,44 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .panel {
+	--panel-background-color: #{$panel-background-color};
+	--panel-text-color: #{$panel-text-color};
+	--panel-accent-text-color: #{$panel-accent-text-color};
+	--panel-shadow-color: #{$panel-shadow-color};
+	--panel-badge-color: #{$panel-badge-color};
+
+	@media (prefers-color-scheme: dark) {
+		--panel-background-color: #{$panel-dark-background-color};
+		--panel-text-color: #{$panel-dark-text-color};
+		--panel-accent-text-color: #{$panel-dark-accent-text-color};
+		--panel-shadow-color: #{$panel-dark-shadow-color};
+		--panel-badge-color: #{$panel-dark-badge-color};
+	}
+
+	.-theme--dark & {
+		--panel-background-color: #{$panel-dark-background-color};
+		--panel-text-color: #{$panel-dark-text-color};
+		--panel-accent-text-color: #{$panel-dark-accent-text-color};
+		--panel-shadow-color: #{$panel-dark-shadow-color};
+		--panel-badge-color: #{$panel-dark-badge-color};
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
 	position: fixed;
 	top: $appbar-size;
 	bottom: 0;
 	left: 0;
 	right: 0;
-	// margin: 12px;
 	border-radius: $panel-border-radius $panel-border-radius 0 0;
-	// outline: 2px dashed #f0a;
-	// padding: 24px;
-	background-color: #fff;
-	color: #000;
+	background-color: var(--panel-background-color);
+	color: var(--panel-text-color);
 	overflow: auto;
 
 	box-shadow:
-		0 -2px 4px -1px rgba(#000, 0.2),
-		0 -4px 5px 0 rgba(#000, 0.14),
-		0 -1px 10px 0 rgba(#000, 0.12);
+		0 -2px 4px -1px rgba(var(--panel-shadow-color), 0.2),
+		0 -4px 5px 0 rgba(var(--panel-shadow-color), 0.14),
+		0 -1px 10px 0 rgba(var(--panel-shadow-color), 0.12);
 
 	transition: transform $transition-timing-function 0.24s;
 
@@ -50,7 +71,7 @@
 		height: $appbar-size;
 		padding: 0 18px;
 		font-size: 18px;
-		color: #525252;
+		color: var(--panel-accent-text-color);
 		cursor: default;
 
 		display: flex;
@@ -67,7 +88,7 @@
 		padding-left: 44px;
 		padding-bottom: 4px;
 		font-size: 16px;
-		color: #525252;
+		color: var(--panel-accent-text-color);
 	}
 
 	// Trem
@@ -116,22 +137,29 @@
 	}
 
 	.status-badge {
-		border: 1px solid #777;
+		border: 1px solid var(--panel-accent-text-color);
 		border-radius: 6px;
 		padding: 2px 6px;
 		font-size: 13px;
-		color: #777;
+		color: var(--panel-accent-text-color);
 		text-align: center;
+		transition: opacity 0.5s $transition-timing-function;
 
 		&.-state--real-time {
-			border-color: $primary-color;
-			color: $primary-color;
+			border-color: var(--panel-badge-color);
+			color: var(--panel-badge-color);
 			text-transform: uppercase;
 		}
 
-		&.-state--no-connection {
-			border-color: $danger-color;
-			color: $danger-color;
+		// &.-state--no-connection {
+		// 	border-color: $danger-color;
+		// 	color: $danger-color;
+		// }
+	}
+
+	.-mode--list & {
+		.status-badge {
+			opacity: 0;
 		}
 	}
 
@@ -167,11 +195,6 @@
 				display: inline-block;
 				padding-left: 12px;
 			}
-
-			// box-shadow:
-			// 	0 1px 2px -1px rgba(#000, 0.2),
-			// 	0 2px 3px 0 rgba(#000, 0.14),
-			// 	0 1px 2px 0 rgba(#000, 0.12);
 		}
 	}
 }
