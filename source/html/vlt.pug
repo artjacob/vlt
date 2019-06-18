@@ -6,7 +6,7 @@ html(lang="pt-br")
 
 		meta(name="description", content="Horário dos próximos trens do VLT")
 
-		link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Cabin:400,500,700|Material+Icons")
+		//- link(rel="stylesheet", defer, href="https://fonts.googleapis.com/css?family=Cabin:400,500,700|Material+Icons")
 		//- link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Barlow:400,500,600,700,800|Material+Icons")
 		//- link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Cabin:400,500,700|Dosis:400,500,700|Fira+Sans:400,500,700|Montserrat:400,500,700|Muli:400,600,700|Titillium+Web:400,600,700|Work+Sans:400,500,700")
 
@@ -30,6 +30,10 @@ html(lang="pt-br")
 			link(rel="icon" type="image/png" sizes="512x512" href="/icon.png")
 			link(rel="apple-touch-icon" type="image/png" sizes="512x512" href="/icon.png")
 
+		//- link(rel="preload", as="font", href="cabin-400.woff2", type="font/woff2")
+		//- link(rel="preload", as="font", href="cabin-500.woff2", type="font/woff2")
+		//- link(rel="preload", as="font", href="material-icons.woff2", type="font/woff2")
+
 		script var env = "#{env}";
 
 	body
@@ -45,9 +49,8 @@ html(lang="pt-br")
 			.panel
 
 		- var inline = env === "development"? false : true;
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js", integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT", crossorigin="anonymous")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js", integrity="sha384-sIzeKWIAHvT0Vm8QbfLCqZwBG0WMCkWVAOYd/330YSNeeQ1Y57N3T9lQz5Ry/EHH", crossorigin="anonymous")
-		script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/locale/pt-br.js", integrity="sha384-9LiF6lX7AZoGG6fE6UmLGm1Hy8qg7S2VO17QubXMoMxSBOZTfTkO0FRdN95N3/9j", crossorigin="anonymous")
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js", integrity="sha384-vk5WoKIaW/vJyUAd9n/wmopsmNhiy+L2Z+SBxGYnUkunIxVxAv/UtMOhba/xskxh", crossorigin="anonymous")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js", integrity="sha384-fYxN7HsDOBRo1wT/NSZ0LkoNlcXvpDpFy6WzB42LxuKAX7sBwgo7vuins+E1HCaw", crossorigin="anonymous")
 
 		if (env === "development")
 			script(src="vlt.js", inline=inline)
