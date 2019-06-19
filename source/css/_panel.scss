@@ -132,9 +132,9 @@
 	}
 
 	// Estado da conexão e hora da última atualização
-	.status {
+	// .status {
 
-	}
+	// }
 
 	.status-badge {
 		border: 1px solid var(--panel-accent-text-color);
@@ -177,18 +177,18 @@
 		justify-content: center;
 
 		.button {
-			border: 1px solid $list-background-color;
+			border: 1px solid var(--panel-badge-color);
 			border-radius: $panel-border-radius * 0.75;
 			padding: 9px 15px;
-			// background-color: $list-background-color;
-			color: $list-background-color;
+			// background-color: var(--panel-badge-color);
+			color: var(--panel-badge-color);
 
 			display: flex;
 			align-items: center;
 			justify-content: center;
 
 			&:hover {
-				background-color: rgba($list-background-color, 0.1);
+				background-color: rgba(var(--panel-badge-color), 0.1);
 			}
 
 			span {
