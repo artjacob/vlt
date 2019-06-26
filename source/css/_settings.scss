@@ -1,0 +1,35 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// settings ////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.settings {
+    padding: 24px 12px 0;
+
+    a {
+        opacity: 0.75;
+        display: inline-flex;
+        justify-content: flex-start;
+
+        i {
+            padding-right: 9px;
+        }
+    }
+
+    .theme {
+        border-radius: $panel-border-radius * 0.75;
+        border: 1px solid #fff;
+
+        .current-theme {
+            display: none;
+            content: "auto";
+
+            @media (prefers-color-scheme: light) {
+                content: "light";
+            }
+
+            @media (prefers-color-scheme: dark) {
+                content: "dark";
+            }
+        }
+    }
+}

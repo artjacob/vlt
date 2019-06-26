@@ -4,11 +4,7 @@ html(lang="pt-br")
 		meta(charset="utf-8")
 		title Horários
 
-		meta(name="description", content="Horário dos próximos trens do VLT")
-
-		//- link(rel="stylesheet", defer, href="https://fonts.googleapis.com/css?family=Cabin:400,500,700|Material+Icons")
-		//- link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Barlow:400,500,600,700,800|Material+Icons")
-		//- link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Cabin:400,500,700|Dosis:400,500,700|Fira+Sans:400,500,700|Montserrat:400,500,700|Muli:400,600,700|Titillium+Web:400,600,700|Work+Sans:400,500,700")
+		meta(name="description", content="Horário dos próximos trens do VLT Carioca")
 
 		if (env === "development")
 			link(rel="stylesheet", href="vlt.css")
@@ -30,10 +26,6 @@ html(lang="pt-br")
 			link(rel="icon" type="image/png" sizes="512x512" href="/icon.png")
 			link(rel="apple-touch-icon" type="image/png" sizes="512x512" href="/icon.png")
 
-		//- link(rel="preload", as="font", href="cabin-400.woff2", type="font/woff2")
-		//- link(rel="preload", as="font", href="cabin-500.woff2", type="font/woff2")
-		//- link(rel="preload", as="font", href="material-icons.woff2", type="font/woff2")
-
 		script var env = "#{env}";
 
 	body
@@ -45,7 +37,13 @@ html(lang="pt-br")
 						span.placeholder Estações
 					i.station-list-trigger.material-icons menu
 					i.options-trigger.material-icons more_vert
-				.list: ul
+				.list
+					ul
+					.settings
+						a.theme(href="#theme")
+							.current-theme
+							i.material-icons brightness_auto
+							span Tema automático
 			.panel
 
 		- var inline = env === "development"? false : true;

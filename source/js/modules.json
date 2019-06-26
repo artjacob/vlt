@@ -8,6 +8,7 @@
 	"source/js/nearest-station.js",
 	"source/js/next-departures.js",
 	"source/js/station-list.js",
+	"source/js/theme.js",
 
 	"source/js/start.js"
 ]
