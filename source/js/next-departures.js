@@ -157,8 +157,10 @@ const nextDepartures = (station) => {
 	getData();
 
 	// Cria novos intervalos e eventos
-	// cue["interval-departures"] = setInterval(getData, 15000); // TEMP
-	// cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
+	if (env === "production") {
+		cue["interval-departures"] = setInterval(getData, 15000); // TEMP
+		cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
+	}
 
 	$(window).on("online visibilitychange", updateWindow);
 };
