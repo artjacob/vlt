@@ -34,17 +34,15 @@ $(function () {
 
 // Service Worker
 if ("serviceWorker" in navigator) {
-	if (env === "production") {
-		window.addEventListener("load", () => {
-			cue["service-worker"] = navigator.serviceWorker.register("/service-worker.js");
+	window.addEventListener("load", () => {
+		cue["service-worker"] = navigator.serviceWorker.register("/service-worker.js");
 
-			cue["service-worker"].then((registration) => {
-				// console.log("Service Worker registration successful!", registration);
-			}, (error) => {
-				// console.log("Service Worker registration failed: ", error);
-			});
+		cue["service-worker"].then((registration) => {
+			// console.log("Service Worker registration successful!", registration);
+		}, (error) => {
+			// console.log("Service Worker registration failed: ", error);
 		});
-	}
+	});
 }
 
 // Estado da conexão
