@@ -1,8 +1,9 @@
 let cue = [ ];
-let $panel;
+let $panel, $station;
 
 $(function () {
 	$panel = $(".panel");
+	$station = $(".station", $panel);
 
 	// Confere se usuário já havia habilitado geolocalização antes
 	if ("geolocation" in navigator) {

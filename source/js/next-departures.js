@@ -19,9 +19,10 @@ const nextDepartures = (station) => {
 	$(".stations h1 .station-name").text(station["name"]);
 
 	// Insire animação de load
-	let $loading = $("<div />").addClass("loading");
-	$("<div />").addClass("animation").appendTo($loading);
-	$panel.empty().append($loading);
+	$panel.addClass("-state--loading");
+	// let $loading = $("<div />").addClass("loading");
+	// $("<div />").addClass("animation").appendTo($loading);
+	// $panel.empty().append($loading);
 
 	// Atualização
 	const lastUpdated = () => {
@@ -55,7 +56,7 @@ const nextDepartures = (station) => {
 		}).done((response) => {
 			departures = response;
 
-			let $station = $("<div />").addClass("station");
+			// let $station = $("<div />").addClass("station");
 			let directions = [ ];
 			let departures_by_direction = { };
 
@@ -98,7 +99,7 @@ const nextDepartures = (station) => {
 			}
 
 			// Monta as partidas
-			let $departures = $("<div />").addClass("departures").appendTo($station);
+			let $departures = $("<div />").addClass("departures");
 			let $title = $("<div />").addClass("departures-title").on("click", () => {
 				$("body").removeClass("-mode--list");
 			}).appendTo($departures);
@@ -159,7 +160,8 @@ const nextDepartures = (station) => {
 			lastUpdated();
 
 			// Limpa o painel e insere os novos dados
-			$panel.empty().append($station);
+			$panel.removeClass("-state--loading -state--closed");
+			$station.empty().append($departures);
 		});
 	};
 
