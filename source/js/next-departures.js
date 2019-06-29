@@ -59,10 +59,13 @@ const nextDepartures = (station) => {
 			let directions = [ ];
 			let departures_by_direction = { };
 
+			let eta_count = 0;
+
 			// Organiza as partidas por destino
 			departures["lines"].forEach((line) => {
 				line["directions"].forEach((direction) => {
 					let direction_title = direction["name"];
+					eta_count += direction["etas"].length;
 
 					if (direction["etas"].length > 0) {
 						if (!directions.includes(direction_title)) {
@@ -80,6 +83,19 @@ const nextDepartures = (station) => {
 					}
 				});
 			});
+
+			// Se número de próximas partidas for zero,
+			// confere se ainda está dentro do horário de funcionamento
+			if (eta_count === 0) {
+				let now = moment();
+				let operation_start_time = moment("06:00", "HH:mm");
+				let operation_end_time = moment("06:00", "HH:mm");
+
+				if (now.isAfter(operation_end_time) && now.isBefore(operation_start_time)) {
+					$panel.addClass("-state--closed");
+					console.log("Fora do horário de operação!");
+				}
+			}
 
 			// Monta as partidas
 			let $departures = $("<div />").addClass("departures").appendTo($station);
