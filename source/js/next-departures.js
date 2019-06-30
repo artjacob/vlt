@@ -18,11 +18,8 @@ const nextDepartures = (station) => {
 	// Coloca o nome da estação no appbar
 	$(".stations h1 .station-name").text(station["name"]);
 
-	// Insire animação de load
+	// Mostra animação de load
 	$panel.addClass("-state--loading");
-	// let $loading = $("<div />").addClass("loading");
-	// $("<div />").addClass("animation").appendTo($loading);
-	// $panel.empty().append($loading);
 
 	// Atualização
 	const lastUpdated = () => {
@@ -56,7 +53,6 @@ const nextDepartures = (station) => {
 		}).done((response) => {
 			departures = response;
 
-			// let $station = $("<div />").addClass("station");
 			let directions = [ ];
 			let departures_by_direction = { };
 
@@ -90,51 +86,60 @@ const nextDepartures = (station) => {
 			if (eta_count === 0) {
 				let now = moment();
 				let operation_start_time = moment("06:00", "HH:mm");
-				let operation_end_time = moment("06:00", "HH:mm");
+				let operation_end_time = moment("00:00", "HH:mm");
 
 				if (now.isAfter(operation_end_time) && now.isBefore(operation_start_time)) {
 					$panel.addClass("-state--closed");
-					console.log("Fora do horário de operação!");
 				}
-			}
+			} else {
+				// Monta as partidas
+				let $departures = $("<div />").addClass("departures");
+				let $title = $("<div />").addClass("departures-title").on("click", () => {
+					$("body").removeClass("-mode--list");
+				}).appendTo($departures);
+				$("<span />").text("Próximos trens").appendTo($title);
 
-			// Monta as partidas
-			let $departures = $("<div />").addClass("departures");
-			let $title = $("<div />").addClass("departures-title").on("click", () => {
-				$("body").removeClass("-mode--list");
-			}).appendTo($departures);
-			$("<span />").text("Próximos trens").appendTo($title);
+				let share_text = ["Próximos trens", "🚉 *" + station["name"] + "*", ""];
 
-			let share_text = ["Próximos trens", "🚉 *" + station["name"] + "*", ""];
+				// directions.sort();
+				directions.forEach((direction) => {
+					let $direction = $("<div />").addClass("direction").appendTo($departures);
+					$("<div />").addClass("direction-caption").text("Destino").appendTo($direction);
 
-			// directions.sort();
-			directions.forEach((direction) => {
-				let $direction = $("<div />").addClass("direction").appendTo($departures);
-				$("<div />").addClass("direction-caption").text("Destino").appendTo($direction);
+					let etas = departures_by_direction[direction];
+					etas.sort((a, b) => { return a["seconds"] - b["seconds"] });
 
-				let etas = departures_by_direction[direction];
-				etas.sort((a, b) => { return a["seconds"] - b["seconds"] });
+					etas.forEach((train) => {
+						let $train = $("<div />").addClass("train").appendTo($direction);
+						let $line = $("<div />").addClass("train-line").appendTo($train);
+						let is_approaching = train["seconds"] < 25;
 
-				etas.forEach((train) => {
-					let $train = $("<div />").addClass("train").appendTo($direction);
-					let $line = $("<div />").addClass("train-line").appendTo($train);
-					let is_approaching = train["seconds"] < 25;
+						let line = line_index[train["line"]];
+						let departure_countdown = (is_approaching? "Agora" : Math.round(train["seconds"] / 60) + "<span>min</span>");
+						let departure_time = moment(train["arrivalTime"]).format("HH:mm");
 
-					let line = line_index[train["line"]];
-					let departure_countdown = (is_approaching? "Agora" : Math.round(train["seconds"] / 60) + "<span>min</span>");
-					let departure_time = moment(train["arrivalTime"]).format("HH:mm");
+						$("<div />").addClass("line-shield").css("color", line["color"]).attr("title", "Linha " + line["id"]).attr("disabled", true).text(line["id"]).appendTo($line);
+						$("<div />").addClass("train-direction").attr("title", "Trem " + train["train"]).text(direction).appendTo($train);
+						$("<div />").addClass("train-eta").attr("title", departure_time).html(departure_countdown).appendTo($train);
 
-					$("<div />").addClass("line-shield").css("color", line["color"]).attr("title", "Linha " + line["id"]).attr("disabled", true).text(line["id"]).appendTo($line);
-					$("<div />").addClass("train-direction").attr("title", "Trem " + train["train"]).text(direction).appendTo($train);
-					$("<div />").addClass("train-eta").attr("title", departure_time).html(departure_countdown).appendTo($train);
+						if (is_approaching) {
+							$train.addClass("-state--approaching");
+						}
 
-					if (is_approaching) {
-						$train.addClass("-state--approaching");
-					}
-
-					// Texto para compartilhamento
-					share_text.push(line_emoji[line["id"]] + " " + direction + " " + departure_time);
+						// Texto para compartilhamento
+						share_text.push(line_emoji[line["id"]] + " " + direction + " " + departure_time);
+					});
 				});
+
+				// Estado da conexão e hora da última atualização
+				$status = $("<div />").addClass("status").appendTo($title);
+				// $connection_status = $("<div />").addClass("connection-status").appendTo($status);
+				// $last_updated = $("<div />").addClass("last-updated").appendTo($status);
+				lastUpdated();
+
+				// Limpa o painel e insere os novos dados
+				$panel.removeClass("-state--closed");
+				$station.empty().append($departures);
 
 				// Compartilhar
 				// if (navigator.share) {
@@ -151,17 +156,13 @@ const nextDepartures = (station) => {
 				// 		// clearInterval(longpress);
 				// 	});
 				// }
-			});
 
-			// Estado da conexão e hora da última atualização
-			$status = $("<div />").addClass("status").appendTo($title);
-			// $connection_status = $("<div />").addClass("connection-status").appendTo($status);
-			// $last_updated = $("<div />").addClass("last-updated").appendTo($status);
-			lastUpdated();
+				if (env === "production") {
+					cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
+				}
+			}
 
-			// Limpa o painel e insere os novos dados
-			$panel.removeClass("-state--loading -state--closed");
-			$station.empty().append($departures);
+			$panel.removeClass("-state--loading");
 		});
 	};
 
@@ -177,7 +178,6 @@ const nextDepartures = (station) => {
 	// Cria novos intervalos e eventos
 	if (env === "production") {
 		cue["interval-departures"] = setInterval(getData, 15000); // TEMP
-		cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
 	}
 
 	$(window).on("online visibilitychange", updateWindow);

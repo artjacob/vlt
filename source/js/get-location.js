@@ -8,6 +8,7 @@ const getLocation = (is_initial = false) => {
 		// Se vier do modo inicial, encerra ele
 		if (is_initial) {
 			$("body").removeClass("-mode--initial");
+			$panel.removeClass("-state--permission");
 		}
 
 		// Descobre a estação mais próxima e procura as próximas partidas

@@ -1,9 +1,10 @@
 let cue = [ ];
-let $panel, $station;
+let $panel, $station, $permission;
 
 $(function () {
 	$panel = $(".panel");
 	$station = $(".station", $panel);
+	$permission = $(".permission", $panel);
 
 	// Confere se usuário já havia habilitado geolocalização antes
 	if ("geolocation" in navigator) {
@@ -15,13 +16,9 @@ $(function () {
 				} else {
 					// Se não tiver, mostra botão para solicitar autorização
 					$("body").addClass("-mode--initial");
+					$panel.addClass("-state--permission");
 
-					let $permission = $("<div />").addClass("permission").appendTo($panel);
-					let $button = $("<a />").addClass("button").attr("href", "#").appendTo($permission);
-					$("<i />").addClass("material-icons").text("near_me").appendTo($button);
-					$("<span />").text("Localizar estação mais próxima").appendTo($button);
-
-					$button.on("click", (event) => {
+					$(".button", $permission).on("click", (event) => {
 						event.preventDefault();
 						getLocation(true);
 					});
