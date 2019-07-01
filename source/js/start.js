@@ -1,6 +1,3 @@
-let cue = [ ];
-let $panel, $station, $permission;
-
 $(function () {
 	$panel = $(".panel");
 	$station = $(".station", $panel);

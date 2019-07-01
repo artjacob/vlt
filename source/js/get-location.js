@@ -13,6 +13,6 @@ const getLocation = (is_initial = false) => {
 
 		// Descobre a estação mais próxima e procura as próximas partidas
 		let nearest_station = nearestStation([position["coords"]["latitude"], position["coords"]["longitude"]]);
-		nextDepartures(nearest_station);
+		nextDepartures(nearest_station, true);
 	});
 };

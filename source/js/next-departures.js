@@ -1,19 +1,11 @@
 // Próximas partidas
-const nextDepartures = (station) => {
+const nextDepartures = (station, from_gps = false) => {
 	let departures;
-
-	let line_emoji = {
-		1: "1️⃣",
-		2: "2️⃣",
-		3: "3️⃣"
-	};
 
 	// Desliga intervalos e eventos existentes
 	clearInterval(cue["interval-departures"]);
 	clearInterval(cue["interval-last-updated"]);
-
 	$(window).off("visibilitychange online");
-	// $(window).off("online");
 
 	// Coloca o nome da estação no appbar
 	$(".stations h1 .station-name").text(station["name"]);
@@ -21,6 +13,8 @@ const nextDepartures = (station) => {
 	// Mostra animação de load
 	$panel.addClass("-state--loading");
 
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Atualização
 	const lastUpdated = () => {
 		let $badge = $("<div />").addClass("status-badge");
@@ -40,6 +34,9 @@ const nextDepartures = (station) => {
 		$status.empty().append($badge);
 	};
 
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// Consulta dos dados
 	const getData = () => {
 		// Só carrega se estiver com foco
 		if (document.hidden === true || navigator.onLine === false) {
@@ -53,10 +50,9 @@ const nextDepartures = (station) => {
 		}).done((response) => {
 			departures = response;
 
+			let eta_count = 0;
 			let directions = [ ];
 			let departures_by_direction = { };
-
-			let eta_count = 0;
 
 			// Organiza as partidas por destino
 			departures["lines"].forEach((line) => {
@@ -83,7 +79,7 @@ const nextDepartures = (station) => {
 
 			// Se número de próximas partidas for zero,
 			// confere se ainda está dentro do horário de funcionamento
-			if (eta_count === 0) {
+			if (eta_count === 0 && env === "production") {
 				let now = moment();
 				let operation_start_time = moment("06:00", "HH:mm");
 				let operation_end_time = moment("00:00", "HH:mm");
@@ -99,6 +95,7 @@ const nextDepartures = (station) => {
 				}).appendTo($departures);
 				$("<span />").text("Próximos trens").appendTo($title);
 
+				// Texto para compartilhamento
 				let share_text = ["Próximos trens", "🚉 *" + station["name"] + "*", ""];
 
 				// directions.sort();
@@ -112,7 +109,7 @@ const nextDepartures = (station) => {
 					etas.forEach((train) => {
 						let $train = $("<div />").addClass("train").appendTo($direction);
 						let $line = $("<div />").addClass("train-line").appendTo($train);
-						let is_approaching = train["seconds"] < 25;
+						let is_approaching = train["seconds"] < 30;
 
 						let line = line_index[train["line"]];
 						let departure_countdown = (is_approaching? "Agora" : Math.round(train["seconds"] / 60) + "<span>min</span>");
@@ -127,7 +124,7 @@ const nextDepartures = (station) => {
 						}
 
 						// Texto para compartilhamento
-						share_text.push(line_emoji[line["id"]] + " " + direction + " " + departure_time);
+						share_text.push("L" + line["id"] + " " + direction + " " + departure_time);
 					});
 				});
 
@@ -163,9 +160,42 @@ const nextDepartures = (station) => {
 			}
 
 			$panel.removeClass("-state--loading");
+
+			// As paradas Sete de Setembro e Colombo são muito próximas, então é comum que a localização
+			// do GPS do usuário leve à estação errada. Por isso, nessas paradas, é mostrado um botão para
+			// facilitar a troca de parada. O botão só é exibido quando o usuário vem da localização
+			// automática (não mostra se parada foi escolhida no menu)
+			if (from_gps === true && ["sete-de-setembro", "colombo"].includes(station["id"])) {
+				let origin_and_destination = {
+					"sete-de-setembro": {
+						"name": "Colombo",
+						"id": "colombo"
+					},
+					"colombo": {
+						"name": "Sete de Setembro",
+						"id": "sete-de-setembro"
+					}
+				};
+
+				let destination = origin_and_destination[station["id"]];
+
+				let $change = $("<div />").addClass("change-station").appendTo($station);
+				let $button = $("<a />").addClass("button").attr("href", "#").appendTo($change);
+				$("<i />").addClass("material-icons").text("near_me").appendTo($button);
+				$("<span />").text("Está em").appendTo($button);
+				$("<strong />").text(destination["name"] + "?").appendTo($button);
+
+				$button.on("click", (event) => {
+					event.preventDefault();
+					nextDepartures(destination);
+				});
+			}
 		});
 	};
 
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// Atualização
 	const updateWindow = () => {
 		if (document.hidden === false && navigator.onLine === true) {
 			lastUpdated();
@@ -173,12 +203,11 @@ const nextDepartures = (station) => {
 		}
 	};
 
-	getData();
-
 	// Cria novos intervalos e eventos
+	$(window).on("online visibilitychange", updateWindow);
 	if (env === "production") {
-		cue["interval-departures"] = setInterval(getData, 15000); // TEMP
+		cue["interval-departures"] = setInterval(getData, 15000);
 	}
 
-	$(window).on("online visibilitychange", updateWindow);
+	getData();
 };
