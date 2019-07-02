@@ -153,10 +153,6 @@ const nextDepartures = (station, from_gps = false) => {
 				// 		// clearInterval(longpress);
 				// 	});
 				// }
-
-				if (env === "production") {
-					cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
-				}
 			}
 
 			$panel.removeClass("-state--loading");
@@ -207,6 +203,7 @@ const nextDepartures = (station, from_gps = false) => {
 	$(window).on("online visibilitychange", updateWindow);
 	if (env === "production") {
 		cue["interval-departures"] = setInterval(getData, 15000);
+		cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
 	}
 
 	getData();
