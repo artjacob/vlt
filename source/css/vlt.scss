@@ -26,7 +26,7 @@ $panel-dark-badge-color: #0af;
 
 // Outros
 $loading-animation-color: #0af;
-$danger-color: #f44336;
+$danger-color: #a7251c;
 $safe-color: #4caf50;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,6 +87,21 @@ a {
 
 .-state--success {
 	color: $safe-color;
+}
+
+.network {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 12px 20px;
+	background-color: $danger-color;
+	color: #fff;
+	display: none;
+
+	&.-state--offline {
+		display: block;
+	}
 }
 
 @import "fonts";

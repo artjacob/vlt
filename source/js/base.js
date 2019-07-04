@@ -1,2 +1,2 @@
 let cue = [ ];
-let $panel, $station, $permission;
+let $panel, $station, $permission, $network, $status;

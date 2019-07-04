@@ -2,6 +2,7 @@ $(function () {
 	$panel = $(".panel");
 	$station = $(".station", $panel);
 	$permission = $(".permission", $panel);
+	$network = $(".network", $panel);
 
 	// Confere se usuário já havia habilitado geolocalização antes
 	if ("geolocation" in navigator) {
@@ -41,26 +42,17 @@ if ("serviceWorker" in navigator) {
 }
 
 // Estado da conexão
-let $status;
-let $connection_status;
-
 const updateConnectionStatus = () => {
-	return false;
 	let connected = navigator.onLine;
 
 	if (connected === true) {
-		// $("<div />").addClass("-state--success").text("Conexão reestabelecida!").appendTo($connection_status);
-
-		setTimeout(() => {
-			$connection_status.empty();
-		}, 4000);
+		$network.removeClass("-state--offline");
 	} else {
-		$connection_status.empty();
-		$("<div />").addClass("-state--error").text("Sem conexão").appendTo($connection_status);
+		$network.addClass("-state--offline");
 	}
 };
 
-$(window).on("online offline", updateConnectionStatus);
+// $(window).on("online offline", updateConnectionStatus);
 
-// window.addEventListener("online", updateConnectionStatus);
-// window.addEventListener("offline", updateConnectionStatus);
+window.addEventListener("online", updateConnectionStatus);
+window.addEventListener("offline", updateConnectionStatus);
