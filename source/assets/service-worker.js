@@ -33,7 +33,7 @@ let precache = () => {
 self.addEventListener("fetch", (event) => {
     let url = new URL(event.request.url);
 
-    if (url.hostname !== "emitremmus.com") {
+    if (url.hostname !== "cloudfunctions.net") {
         event.respondWith(fromCache(event.request));
 
         if (url.hostname === "vltcarioca.web.app" && event.request.destination !== "font") {
