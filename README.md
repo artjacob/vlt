@@ -14,3 +14,5 @@ Os recursos de JavaScript usados são:
 E os recursos de CSS:
 - **prefers-color-scheme media query:** o app tem um tema claro e um tema escuro, e segue a definição do sistema.
 - **Variáveis CSS:** as cores dos temas são guardadas em variáveis CSS.
+
+Também aproveitei a oportunidade para testar o Firebase. O web app é hospedado no **Firebase Hosting**, e as chamadas à API do VLT são feitas com o **Firebase Cloud Functions**.

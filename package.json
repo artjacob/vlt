@@ -9,7 +9,7 @@
   },
   "scripts": {
     "serve": "gulp serve -s",
-    "deploy": "gulp stage && firebase deploy --only hosting"
+    "deploy": "gulp stage && firebase deploy"
   },
   "author": {
     "name": "Arthur Jacob",
