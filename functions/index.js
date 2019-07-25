@@ -1,7 +1,12 @@
 const functions = require("firebase-functions");
 const request = require("request");
 
-exports.departures = functions.https.onRequest((req, res) => {
+let runtime_options = {
+    "memory": "128MB",
+    "timeoutSeconds": 10
+};
+
+exports.departures = functions.runWith(runtime_options).https.onRequest((req, res) => {
     let station = req.query.station;
     let callback = req.query.callback;
 
