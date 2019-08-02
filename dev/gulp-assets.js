@@ -1,12 +1,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // gulp / assets ///////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-const gulp = require("gulp");
-const browserSync = require("browser-sync").get("gulp");
+const { src, dest, watch } = require("gulp");
 const log = require("fancy-log");
 const color = require("ansi-colors");
-const plumber = require("gulp-plumber");
-const sourcemaps = require("gulp-sourcemaps");
 const config = require("./gulp-config.js");
 
 // Módulos específicos para Assets
@@ -20,7 +17,7 @@ let tasks = { };
 
 // Watch
 tasks["watch"] = function watchAssets(done) {
-    gulp.watch(config["assets"]["watch"], { "cwd": config["assets"]["dir"] }, tasks["stage"]);
+    watch(config["assets"]["watch"], { "cwd": config["assets"]["dir"] }, tasks["stage"]);
     done();
 };
 
@@ -33,11 +30,10 @@ tasks["stage"] = function stageHTML(done) {
         fs.copyFileSync(source, file["destination"]["development"] + file["filename"]);
 
         if (type === "js") {
-            gulp.src(source)
-                .pipe(plumber())
+            src(source)
                 .pipe(babel({ presets: ["@babel/env"] }))
                 .pipe(uglify())
-                .pipe(gulp.dest(file["destination"]["production"], { mode: "0644" }));
+                .pipe(dest(file["destination"]["production"], { mode: "0644" }));
         }
 
         else if (type === "json") {
