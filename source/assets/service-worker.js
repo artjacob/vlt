@@ -1,8 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-let static_cache_name = "vlt-cfba2efb";
-// let expected_caches = [ static_cache_name ];
+const static_cache_name = "vlt-cfba2efb";
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // install /////////////////////////////////////////////////////////////////////////////////////////
@@ -12,9 +11,10 @@ self.addEventListener("install", (event) => {
     event.waitUntil(precache());
 });
 
-let precache = () => {
+const precache = () => {
     caches.open(static_cache_name).then((cache) => cache.addAll([
         "/",
+        "/manifest.json",
         "/cabin-400.woff2",
         "/cabin-500.woff2",
         "/cabin-700.woff2",
@@ -26,12 +26,11 @@ let precache = () => {
     ]));
 };
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // fetch ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 self.addEventListener("fetch", (event) => {
-    let url = new URL(event.request.url);
+    const url = new URL(event.request.url);
 
     if (url.hostname !== "cloudfunctions.net") {
         event.respondWith(fromCache(event.request));
@@ -42,11 +41,11 @@ self.addEventListener("fetch", (event) => {
     }
 });
 
-let fromCache = (request) => {
+const fromCache = (request) => {
     return caches.match(request).then((response) => response || fetch(request))
 };
 
-let update = (request) => {
+const update = (request) => {
     return caches.open(static_cache_name).then((cache) => {
         return fetch(request).then((response) => {
             return cache.put(request, response);
