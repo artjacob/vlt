@@ -2,7 +2,7 @@
 // theme ///////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-let Theme = (() => {
+const theme = (() => {
     let theme_order = [
         "auto",
         "light",
@@ -11,20 +11,20 @@ let Theme = (() => {
 
     let theme_settings = {
         "auto": {
-            "title": "Tema automático",
+            "title": L10n[language]["auto-theme"],
             "icon": "brightness_auto"
         },
         "light": {
-            "title": "Tema claro",
+            "title": L10n[language]["light-theme"],
             "icon": "brightness_5"
         },
         "dark": {
-            "title": "Tema escuro",
+            "title": L10n[language]["dark-theme"],
             "icon": "brightness_4"
         },
     };
 
-    let set = (new_theme, old_theme) => {
+    let set = (new_theme, old_theme = "") => {
         current_theme = new_theme;
 
         $(".settings .theme span").text(theme_settings[new_theme]["title"]);
@@ -42,13 +42,18 @@ let Theme = (() => {
 
     // Confere se já há tema salvo no localStorage.
     // Se não houver, pega o padrão do sistema
-    let current_theme = localStorage.getItem("theme") || getComputedStyle($(".settings .current-theme")[0]).getPropertyValue("content").replace(/"/g, "");
+    // let current_theme = localStorage.getItem("theme") || getComputedStyle($(".settings .current-theme")[0]).getPropertyValue("content").replace(/"/g, "");
+    let current_theme = localStorage.getItem("theme") || "auto";
 
     if (current_theme) {
-        set(current_theme, "");
+        set(current_theme);
     }
 
     $(function() {
+        if (!current_theme) {
+            $(".settings .theme span").text(L10n[language]["auto-theme"]);
+        }
+
         $(".settings .theme").on("click", (event) => {
             event.preventDefault();
 

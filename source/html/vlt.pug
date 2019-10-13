@@ -34,36 +34,40 @@ html(lang="pt-br")
 
 		//- ////////////////////////////////////////////////////////////////////////////////////////
 		//- Lista de paradas
-		.stations
-			.appbar
+		.navigation
+			.navigation-header
 				h1
 					span.station-name
-					span.placeholder Estações
-				i.station-list-trigger.material-icons menu
-				i.options-trigger.material-icons more_vert
-			.list
-				ul
+					span.placeholder
+				i.navigation-trigger.material-icons menu
+				//- i.about-trigger.material-icons more_vert
+			.navigation-content
+				ul.stations
 				.settings
 					a.theme(href="#theme")
 						.current-theme
 						i.material-icons brightness_auto
-						span Tema automático
+						span
 
 		//- ////////////////////////////////////////////////////////////////////////////////////////
 		//- Painel de horários
 		.panel
-			.station
-			.loading
-				.animation
-			.closed
-				h1 Fora de operação
-				p O VLT Carioca circula<br> todos os dias das 6h à 0h
-				i.material-icons access_time
-			.permission
-				a.button(href="#")
-					i.material-icons near_me
-					span Localizar estação mais próxima
-			.network Sem conexão
+			.panel-header
+				.title
+				.badge
+			.panel-content
+				.station
+				.closed
+				.permission
+					a.button(href="#")
+						i.material-icons near_me
+						span
+				.loading: .animation
+			.panel-footer
+				.status.-mode--collapsed
+					.icon.material-icons
+					.text
+				.network
 
 	//- ////////////////////////////////////////////////////////////////////////////////////////////
 

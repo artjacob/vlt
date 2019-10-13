@@ -236,7 +236,7 @@ let stations = [
 	}
 ];
 
-let station_index = {};
+let station_index = { };
 stations.forEach((station) => {
 	let station_name = station["name"];
 	station_index[station_name] = station;

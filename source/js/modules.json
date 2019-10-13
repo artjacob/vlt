@@ -1,13 +1,16 @@
 [
 	"source/js/base.js",
+	"source/js/L10n.js",
 
-	"source/js/station-info.js",
-	"source/js/line-info.js",
+	"source/js/data/station-info.js",
+	"source/js/data/line-info.js",
 
-	"source/js/get-location.js",
-	"source/js/nearest-station.js",
-	"source/js/next-departures.js",
-	"source/js/station-list.js",
+	"source/js/functions/get-location.js",
+	"source/js/functions/nearest-station.js",
+	"source/js/functions/next-departures.js",
+	"source/js/functions/system-status.js",
+
+	"source/js/interface/station-list.js",
 	"source/js/theme.js",
 
 	"source/js/start.js"

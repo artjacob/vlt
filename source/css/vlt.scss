@@ -6,10 +6,10 @@
 $primary-color: #003c8f;
 
 // Lista de estações
-$list-background-color: $primary-color;
-$list-text-color: #fff;
-$list-divider-color: rgba(#fff, 0.25);
-$list-hover-background-color: rgba(#fff, 0.1);
+$navigation-background-color: $primary-color;
+$navigation-text-color: #fff;
+$navigation-divider-color: rgba(#fff, 0.25);
+$navigation-hover-background-color: rgba(#fff, 0.1);
 
 // Painel de horãrios
 $panel-background-color: #fff;
@@ -36,10 +36,36 @@ $appbar-size: 56px;
 $shield-size: 22px;
 $transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
+$desktop-navigation-width: 300px;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@mixin scaffolding($color: #666) {
+	outline: 3px dashed rgba($color, 0.75);
+}
+
+@mixin theme($title) {
+	.-theme--#{$title} & {
+		@content;
+	}
+
+	@media (prefers-color-scheme: dark) {
+		@content;
+	}
+}
+
+@mixin screen($size) {
+	@if ($size == "desktop2") {
+		@media (min-width: 768px) {
+			@content;
+		}
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 body {
-	background-color: $list-background-color;
+	background-color: $navigation-background-color;
 	font: 18px cabin, sans-serif;
 	color: #fff;
 	overflow: hidden;
@@ -81,31 +107,36 @@ a {
 	}
 }
 
-.-state--error {
-	color: $danger-color;
-}
+// .-state--error {
+// 	color: $danger-color;
+// }
 
-.-state--success {
-	color: $safe-color;
-}
+// .-state--success {
+// 	color: $safe-color;
+// }
 
 .network {
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	right: 0;
+	// position: fixed;
+	// bottom: 0;
+	// left: 0;
+	// right: 0;
 	padding: 12px 20px;
-	background-color: $danger-color;
+	background-color: #333;
 	color: #fff;
 	display: none;
 
 	&.-state--offline {
+		background-color: $danger-color;
 		display: block;
 	}
 }
 
+@import "ui/panel";
+@import "ui/navigation";
+
 @import "fonts";
-@import "panel";
+@import "station";
 @import "list";
+@import "system-status";
 @import "loading";
 @import "settings";

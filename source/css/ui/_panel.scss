@@ -1,0 +1,261 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// panel ///////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.panel {
+	position: fixed;
+	top: $appbar-size;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-radius: $panel-border-radius $panel-border-radius 0 0;
+	background-color: $panel-background-color;
+	color: $panel-text-color;
+
+	box-shadow:
+		0 -2px 4px -1px rgba($panel-shadow-color, 0.2),
+		0 -4px 5px 0 rgba($panel-shadow-color, 0.14),
+		0 -1px 10px 0 rgba($panel-shadow-color, 0.12);
+
+	transition: transform $transition-timing-function 0.24s;
+
+	display: flex;
+	flex-direction: column;
+
+	// Tema escuro
+	@include theme("dark") {
+		background-color: $panel-dark-background-color;
+		color: $panel-dark-text-color;
+
+		box-shadow:
+			0 -2px 4px -1px rgba($panel-dark-shadow-color, 0.2),
+			0 -4px 5px 0 rgba($panel-dark-shadow-color, 0.14),
+			0 -1px 10px 0 rgba($panel-dark-shadow-color, 0.12);
+	}
+
+	// Desktop
+	@include screen("desktop") {
+		top: 0;
+		left: $desktop-navigation-width;
+		border-radius: 0;
+
+		box-shadow:
+			-2px 0 4px -1px rgba($panel-shadow-color, 0.2),
+			-4px 0 5px 0 rgba($panel-shadow-color, 0.14),
+			-1px 0 10px 0 rgba($panel-shadow-color, 0.12);
+	}
+
+	// Cabeçalho
+	.panel-header {
+		height: $appbar-size;
+		padding: 0 18px;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-grow: 0;
+		flex-shrink: 0;
+
+		.title,
+		.badge {
+			transition: opacity 0.5s $transition-timing-function;
+		}
+
+		.title {
+			font-size: 18px;
+			color: $panel-accent-text-color;
+
+			@include theme("dark") {
+				color: $panel-dark-accent-text-color;
+			}
+		}
+
+		.badge {
+
+		}
+	}
+
+	// Conteúdo
+	.panel-content {
+		overflow: auto;
+		flex-grow: 2;
+	}
+
+	// Rodapé
+	.panel-footer {
+		display: flex;
+		flex-direction: column;
+		flex-grow: 0;
+		flex-shrink: 0;
+
+		.status {
+			order: 1;
+		}
+
+		.network {
+			order: 2;
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
+	.station,
+	.closed,
+	.permission,
+	.loading {
+		display: none;
+	}
+
+	// Modos
+	.-mode--list & {
+		transform: translateY(calc(100vh - (#{$appbar-size} * 2)));
+
+		.panel-header {
+			.title {
+				opacity: 1;
+			}
+
+			.badge {
+				opacity: 0;
+			}
+		}
+	}
+
+	// Estados
+	&.-state--station {
+		.station {
+			display: flex;
+		}
+	}
+
+	&.-state--loading {
+		.loading {
+			display: flex;
+		}
+
+		.panel-header .badge {
+			display: none;
+		}
+	}
+
+	&.-state--closed {
+		.closed {
+			display: flex;
+		}
+
+		.panel-header .title,
+		.panel-header .badge {
+			display: none;
+		}
+	}
+
+	&.-state--permission {
+		.permission {
+			display: flex;
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// Badge
+
+	.status-badge {
+		border: 1px solid $panel-accent-text-color;
+		border-radius: 6px;
+		padding: 2px 6px;
+		font-size: 13px;
+		color: $panel-accent-text-color;
+		text-align: center;
+
+		@include theme("dark") {
+			border-color: $panel-dark-accent-text-color;
+			color: $panel-dark-accent-text-color;
+		}
+
+		&.-state--real-time {
+			border-color: $panel-badge-color;
+			color: $panel-badge-color;
+			text-transform: uppercase;
+
+			@include theme("dark") {
+				border-color: $panel-dark-badge-color;
+				color: $panel-dark-badge-color;
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// Permissão
+	.permission {
+		width: 100%;
+		height: 100%;
+
+		display: none;
+		align-items: center;
+		justify-content: center;
+
+		.button {
+			border: 1px solid $panel-badge-color;
+			border-radius: $panel-border-radius * 0.75;
+			padding: 9px 15px;
+			color: $panel-badge-color;
+
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			@include theme("dark") {
+				border-color: $panel-dark-badge-color;
+				color: $panel-dark-badge-color;
+			}
+
+			&:hover {
+				background-color: rgba($panel-badge-color, 0.1);
+
+				@include theme("dark") {
+					background-color: rgba($panel-dark-badge-color, 0.1);
+				}
+			}
+
+			span {
+				display: inline-block;
+				padding-left: 12px;
+			}
+		}
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+	// Fora de operação
+	.closed {
+		height: 100%;
+		text-align: center;
+
+		display: none;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		h1 {
+			margin: 0;
+			padding: 9px 36px 0;
+			font-weight: 500;
+			font-size: 36px;
+			order: 2;
+		}
+
+		p {
+			padding: 12px 36px 36px;
+			font-size: 24px;
+			order: 3;
+			color: $panel-accent-text-color;
+
+			@include theme("dark") {
+				color: $panel-dark-accent-text-color;
+			}
+		}
+
+		i {
+			font-size: 48px;
+			order: 1;
+		}
+	}
+}

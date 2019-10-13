@@ -1,0 +1,132 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// navigation //////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.navigation {
+
+	// Desktop
+	@include screen("desktop") {
+		position: fixed;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		width: $desktop-navigation-width;
+		overflow: auto;
+	}
+
+    // Cabeçalho
+	.navigation-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: $appbar-size;
+		background-color: $navigation-background-color;
+		z-index: 1;
+		cursor: pointer;
+
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+
+		-webkit-tap-highlight-color: rgba(#000, 0);
+
+		&::before {
+			display: block;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background: linear-gradient(to bottom, rgba(#000, 0.333), rgba(#000, 0));
+			opacity: 0;
+			z-index: 0;
+			content: "";
+		}
+
+		&:active::before {
+			opacity: 1;
+		}
+
+		&::after {
+			display: block;
+			position: absolute;
+			bottom: 0;
+			left: 6px;
+			right: 6px;
+			height: 1px;
+			background-color: $navigation-divider-color;
+			opacity: 0;
+			transition: opacity $transition-timing-function 0.24s;
+			content: "";
+		}
+
+		h1 {
+			padding-left: 8px;
+			font-weight: 500;
+			font-size: 24px;
+			z-index: 1;
+			position: relative;
+
+			flex-grow: 1;
+			order: 2;
+
+			.placeholder {
+				display: none;
+			}
+		}
+
+		i {
+			width: $appbar-size;
+			height: $appbar-size;
+			z-index: 1;
+			position: relative;
+
+			display: flex;
+			align-items: center;
+            justify-content: center;
+
+            transition: opacity $transition-timing-function 0.24s;
+		}
+
+		.navigation-trigger {
+			order: 1;
+		}
+
+		.about-trigger {
+			order: 3;
+			opacity: 0;
+		}
+    }
+
+    // Conteúdo
+	.navigation-content {
+		padding: ($appbar-size * 1.1) 0 ($appbar-size * 1.5);
+	}
+
+   	////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Modos
+    .-mode--list &,
+	.-mode--initial & {
+		.navigation-header {
+			.station-name {
+				display: none;
+			}
+
+			.placeholder {
+				display: block;
+            }
+
+            .about-trigger {
+                opacity: 1;
+            }
+		}
+	}
+
+	.-mode--scroll.-mode--list & {
+		.navigation-header::after {
+			opacity: 1;
+		}
+	}
+}
