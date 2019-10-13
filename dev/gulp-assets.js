@@ -4,6 +4,7 @@
 const { src, dest, watch } = require("gulp");
 const log = require("fancy-log");
 const color = require("ansi-colors");
+const plumber = require("gulp-plumber");
 const config = require("./gulp-config.js");
 
 // Módulos específicos para Assets
@@ -17,12 +18,12 @@ let tasks = { };
 
 // Watch
 tasks["watch"] = function watchAssets(done) {
-    watch(config["assets"]["watch"], { "cwd": config["assets"]["dir"] }, tasks["stage"]);
+    watch(config["assets"]["watch"], { cwd: config["assets"]["dir"], ignoreInitial: false }, tasks["stage"]);
     done();
 };
 
 // Stage
-tasks["stage"] = function stageHTML(done) {
+tasks["stage"] = function stageAssets(done) {
     config["assets"]["files"].forEach((file) => {
         let type = file["type"];
         let source = file["source"];
@@ -31,6 +32,7 @@ tasks["stage"] = function stageHTML(done) {
 
         if (type === "js") {
             src(source)
+                .pipe(plumber())
                 .pipe(babel({ presets: ["@babel/env"] }))
                 .pipe(uglify())
                 .pipe(dest(file["destination"]["production"], { mode: "0644" }));

@@ -8,7 +8,7 @@
     "url": "https://github.com/artjacob/vlt.git"
   },
   "scripts": {
-    "serve": "gulp stage && gulp serve -s",
+    "serve": "gulp serve -s",
     "deploy": "gulp stage && firebase deploy"
   },
   "author": {
@@ -30,8 +30,10 @@
     "gulp-cssnano": "^2.1.3",
     "gulp-group-css-media-queries": "^1.2.2",
     "gulp-inline-source": "^4.0.0",
+    "gulp-plumber": "^1.2.1",
     "gulp-pug": "^4.0.1",
     "gulp-rename": "^1.4.0",
-    "gulp-sass": "^4.0.1"
+    "gulp-sass": "^4.0.1",
+    "gulp-uglify": "^3.0.2"
   }
 }

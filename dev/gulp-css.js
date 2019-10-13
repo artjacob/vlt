@@ -4,6 +4,7 @@
 const { src, dest, watch } = require("gulp");
 const log = require("fancy-log");
 const color = require("ansi-colors");
+const plumber = require("gulp-plumber");
 const config = require("./gulp-config.js");
 
 // Módulos específicos para CSS
@@ -18,13 +19,14 @@ let tasks = { };
 
 // Watch
 tasks["watch"] = function watchCSS(done) {
-    watch(config["css"]["watch"], { "cwd": config["css"]["dir"] }, tasks["stage"]);
+    watch(config["css"]["watch"], { cwd: config["css"]["dir"], ignoreInitial: false }, tasks["stage"]);
     done();
 };
 
 // Stage
 tasks["stage"] = function stageCSS(done) {
     src(config["css"]["source"], { sourcemaps: true })
+        .pipe(plumber())
         .pipe(sass({ outputStyle: "expanded" }))
         .pipe(groupMediaQueries())
         .pipe(cssnano({ autoprefixer: { add: true, browsers: ["> 1%"] }, zindex: true }))

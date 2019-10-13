@@ -4,6 +4,7 @@
 const { src, dest, watch } = require("gulp");
 const log = require("fancy-log");
 const color = require("ansi-colors");
+const plumber = require("gulp-plumber");
 const config = require("./gulp-config.js");
 
 // Módulos específicos para HTML
@@ -17,7 +18,7 @@ let tasks = { };
 
 // Watch
 tasks["watch"] = function watchHTML(done) {
-    watch(config["html"]["watch"], { "cwd": config["html"]["dir"] }, tasks["stage"]);
+    watch(config["html"]["watch"], { cwd: config["html"]["dir"], ignoreInitial: false }, tasks["stage"]);
     done();
 };
 
@@ -25,6 +26,7 @@ tasks["watch"] = function watchHTML(done) {
 tasks["stage"] = function stageHTML(done) {
     for (let channel in config["html"]["destination"]) {
         src(config["html"]["source"])
+            .pipe(plumber())
             .pipe(pug({
                 "pretty": (channel === "development"? " " : false),
                 "locals": {
