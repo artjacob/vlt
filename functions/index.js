@@ -1,16 +1,16 @@
 const functions = require("firebase-functions");
 const request = require("request");
 
-let runtime_options = {
+const runtime_options = {
     "memory": "128MB",
     "timeoutSeconds": 10
 };
 
 exports.departures = functions.runWith(runtime_options).https.onRequest((req, res) => {
-    let station = req.query.station;
-    let callback = req.query.callback;
+    const station = req.query.station;
+    const callback = req.query.callback;
 
-    let stations = {
+    const stations = {
         "santos-dumont": 1,
         "antonio-carlos": 2,
         "cinelandia": 3,
@@ -43,12 +43,52 @@ exports.departures = functions.runWith(runtime_options).https.onRequest((req, re
     };
 
     request("http://appmobile.vltrio.com.br:8080/station/eta?id=vlt_station_" + stations[station], (error, response, body) => {
-        res.header("content-type", "application/json; charset=utf-8");
-
         if (callback) {
+            res.header("content-type", "application/javascript; charset=utf-8");
             res.send(callback + "(" + body + ");");
         } else {
+            res.header("content-type", "application/json; charset=utf-8");
             res.send(body);
         }
     });
+});
+
+exports.status = functions.runWith(runtime_options).https.onRequest((req, res) => {
+    const callback = req.query.callback;
+
+    request("http://157.230.119.186/modal_api", (error, response, body) => {
+        const vlt = body.split("\n")[1];
+        const parts = vlt.split(";");
+
+        const object = {
+            "status": parts[1],
+            "message": parts[2] || null
+        };
+
+        if (callback) {
+            res.header("content-type", "application/javascript; charset=utf-8");
+            res.send(callback + "(" + JSON.stringify(object) + ");");
+        } else {
+            res.header("content-type", "application/json; charset=utf-8");
+            res.send(object);
+        }
+    });
+
+    // let dummy_response;
+    // let ok = false;
+
+    // if (ok) {
+    //     dummy_response = {
+    //         "status": "Normal",
+    //         "message": null
+    //     };
+    // } else {
+    //     dummy_response = {
+    //         "status": "Em atenção",
+    //         "message": "Linha 1 opera entre Praia Formosa e Cinelândia por conta de instabilidade no sistema de energia na região do Santos Dumont."
+    //     };
+    // }
+
+    // res.header("content-type", "application/javascript; charset=utf-8");
+    // res.send(callback + "(" + JSON.stringify(dummy_response) + ");");
 });
