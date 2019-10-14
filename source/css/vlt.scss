@@ -36,7 +36,7 @@ $appbar-size: 56px;
 $shield-size: 22px;
 $transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 
-$desktop-navigation-width: 300px;
+$desktop-navigation-width: 400px;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +55,7 @@ $desktop-navigation-width: 300px;
 }
 
 @mixin screen($size) {
-	@if ($size == "desktop2") {
+	@if ($size == "-desktop") {
 		@media (min-width: 768px) {
 			@content;
 		}

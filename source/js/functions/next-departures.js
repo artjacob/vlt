@@ -67,10 +67,10 @@ const nextDepartures = (station, from_gps = false) => {
 		}
 
 		// Carrega os dados
-		$.getJSON("https://emitremmus.com/-/vlt/departures?callback=?", {
-		// $.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/departures?callback=?", {
+		// $.getJSON("https://emitremmus.com/-/vlt/departures?callback=?", {
+		$.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/departures?callback=?", {
 			"station": station["id"],
-			"env": "dev"
+			// "env": "dev"
 		}).done((response) => {
 			departures = response;
 

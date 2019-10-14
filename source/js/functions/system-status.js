@@ -19,6 +19,11 @@ const systemStatus = (() => {
     ];
 
     const getStatus = () => {
+        // Só carrega se estiver em foco e online
+        if (document.hidden === true || navigator.onLine === false) {
+            return false;
+        }
+
         $.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/status?callback=?").done((response) => {
             $panel["footer"]["status"].removeClass(state_classes);
 
@@ -55,4 +60,9 @@ const systemStatus = (() => {
 
         });
     };
+
+    $(window).on("visibilitychange.systemStatus", () => {
+        last_status = null;
+        getStatus();
+    });
 })();
