@@ -5,10 +5,8 @@
 // Pega o estado do sistema
 const systemStatus = (() => {
     cue["load-document"].done(() => {
-        if (env === "production") {
-            cue["interval-system-status"] = setInterval(getStatus, 60 * 1000);
-            getStatus();
-        }
+        cue["interval-system-status"] = setInterval(getStatus, 60 * 1000);
+        getStatus();
     });
 
     let last_status;
@@ -24,7 +22,9 @@ const systemStatus = (() => {
             return false;
         }
 
-        $.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/status?callback=?").done((response) => {
+        $.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/status?callback=?", {
+            "env": env
+        }).done((response) => {
             cue["load-departures"].done(() => {
                 $panel["footer"]["status"].removeClass(state_classes);
 

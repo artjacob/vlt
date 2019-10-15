@@ -67,10 +67,9 @@ const nextDepartures = (station, from_gps = false) => {
 		}
 
 		// Carrega os dados
-		// $.getJSON("https://emitremmus.com/-/vlt/departures?callback=?", {
 		$.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/departures?callback=?", {
 			"station": station["id"],
-			// "env": "dev"
+			"env": env
 		}).done((response) => {
 			departures = response;
 
@@ -193,7 +192,6 @@ const nextDepartures = (station, from_gps = false) => {
 	};
 
 
-	////////////////////////////////////////////////////////////////////////////////////////////////
 	// Atualização
 	const updateWindow = () => {
 		if (document.hidden === false && navigator.onLine === true) {
@@ -204,11 +202,8 @@ const nextDepartures = (station, from_gps = false) => {
 
 	// Cria novos intervalos e eventos
 	$(window).on("online.departures visibilitychange.departures", updateWindow);
-
-	if (env === "production") {
-		cue["interval-departures"] = setInterval(getData, 15000);
-		cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
-	}
+	cue["interval-departures"] = setInterval(getData, 15000);
+	cue["interval-last-updated"] = setInterval(lastUpdated, 5000);
 
 	getData();
 };

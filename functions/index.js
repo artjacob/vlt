@@ -1,13 +1,20 @@
 const functions = require("firebase-functions");
 const request = require("request");
+const samples = require("./samples");
 
 const runtime_options = {
     "memory": "128MB",
     "timeoutSeconds": 10
 };
 
+const content_type = {
+    "json": "application/json; charset=utf-8",
+    "jsonp": "application/javascript; charset=utf-8"
+};
+
 exports.departures = functions.runWith(runtime_options).https.onRequest((req, res) => {
     const station = req.query.station;
+    const env = req.query.env;
     const callback = req.query.callback;
 
     const stations = {
@@ -42,53 +49,50 @@ exports.departures = functions.runWith(runtime_options).https.onRequest((req, re
         "santa-rita": 29
     };
 
-    request("http://appmobile.vltrio.com.br:8080/station/eta?id=vlt_station_" + stations[station], (error, response, body) => {
-        if (callback) {
-            res.header("content-type", "application/javascript; charset=utf-8");
-            res.send(callback + "(" + body + ");");
+    const data = new Promise((resolve) => {
+        if (env === "development") {
+            resolve(JSON.stringify(samples["departures"]));
         } else {
-            res.header("content-type", "application/json; charset=utf-8");
-            res.send(body);
+            request("http://appmobile.vltrio.com.br:8080/station/eta?id=vlt_station_" + stations[station], (error, response, body) => {
+                resolve(body);
+            });
+        }
+    }).then((response) => {
+        if (callback) {
+            res.header("content-type", content_type["jsonp"]);
+            res.send(callback + "(" + response + ");");
+        } else {
+            res.header("content-type", content_type["json"]);
+            res.send(response);
         }
     });
 });
 
 exports.status = functions.runWith(runtime_options).https.onRequest((req, res) => {
+    const env = req.query.env;
     const callback = req.query.callback;
 
-    request("http://157.230.119.186/modal_api", (error, response, body) => {
-        const vlt = body.split("\n")[1];
-        const parts = vlt.split(";");
-
-        const object = {
-            "status": parts[1],
-            "message": parts[2] || null
-        };
-
-        if (callback) {
-            res.header("content-type", "application/javascript; charset=utf-8");
-            res.send(callback + "(" + JSON.stringify(object) + ");");
+    const data = new Promise((resolve) => {
+        if (env === "development") {
+            resolve(samples["status"]["warning"]);
         } else {
-            res.header("content-type", "application/json; charset=utf-8");
-            res.send(object);
+            request("http://157.230.119.186/modal_api", (error, response, body) => {
+                const vlt = body.split("\n")[1];
+                const parts = vlt.split(";");
+
+                resolve({
+                    "status": parts[1],
+                    "message": parts[2] || null
+                });
+            });
+        }
+    }).then((response) => {
+        if (callback) {
+            res.header("content-type", content_type["jsonp"]);
+            res.send(callback + "(" + JSON.stringify(response) + ");");
+        } else {
+            res.header("content-type", content_type["json"]);
+            res.send(response);
         }
     });
-
-    // let dummy_response;
-    // let ok = false;
-
-    // if (ok) {
-    //     dummy_response = {
-    //         "status": "Normal",
-    //         "message": null
-    //     };
-    // } else {
-    //     dummy_response = {
-    //         "status": "Em atenção",
-    //         "message": "Linha 1 opera entre Praia Formosa e Cinelândia por conta de instabilidade no sistema de energia na região do Santos Dumont."
-    //     };
-    // }
-
-    // res.header("content-type", "application/javascript; charset=utf-8");
-    // res.send(callback + "(" + JSON.stringify(dummy_response) + ");");
 });
