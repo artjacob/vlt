@@ -7,3 +7,4 @@ let cue = [ ];
 let $body, $navigation, $panel;
 
 cue["load-document"] = $.Deferred();
+cue["load-departures"] = $.Deferred();

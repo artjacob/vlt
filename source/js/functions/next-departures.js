@@ -187,6 +187,8 @@ const nextDepartures = (station, from_gps = false) => {
 					$panel["content"]["station"].append($suggestion);
 				}
 			}
+
+			cue["load-departures"].resolve();
 		});
 	};
 

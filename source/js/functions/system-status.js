@@ -5,7 +5,7 @@
 // Pega o estado do sistema
 const systemStatus = (() => {
     cue["load-document"].done(() => {
-        if (env !== "development") {
+        if (env === "production") {
             cue["interval-system-status"] = setInterval(getStatus, 60 * 1000);
             getStatus();
         }
@@ -25,39 +25,40 @@ const systemStatus = (() => {
         }
 
         $.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/status?callback=?").done((response) => {
-            $panel["footer"]["status"].removeClass(state_classes);
+            cue["load-departures"].done(() => {
+                $panel["footer"]["status"].removeClass(state_classes);
 
-            if (response["status"]) {
-                if (response["status"] === "Normal") {
-                    $panel["footer"]["status"].addClass("-state--ok");
+                if (response["status"]) {
+                    if (response["status"] === "Normal") {
+                        $panel["footer"]["status"].addClass("-state--ok");
 
-                    if (last_status !== "Normal") {
-                        $panel["footer"]["status"]["icon"].text("check_circle");
-                        $panel["footer"]["status"]["text"].text(L10n[language]["status-ok"]);
+                        if (last_status !== "Normal") {
+                            $panel["footer"]["status"]["icon"].text("check_circle");
+                            $panel["footer"]["status"]["text"].text(L10n[language]["status-ok"]);
+
+                            let message_height = $panel["footer"]["status"]["text"].outerHeight();
+                            $panel["footer"]["status"].height(message_height);
+
+                            $panel["footer"]["status"].removeClass("-mode--collapsed");
+
+                            setTimeout(() => {
+                                $panel["footer"]["status"].css("height", "").addClass("-mode--collapsed");
+                            }, 10000);
+                        }
+                    } else {
+                        $panel["footer"]["status"].addClass("-state--warning");
+                        $panel["footer"]["status"]["icon"].text("error");
+                        $panel["footer"]["status"]["text"].text(response["message"]);
 
                         let message_height = $panel["footer"]["status"]["text"].outerHeight();
                         $panel["footer"]["status"].height(message_height);
 
                         $panel["footer"]["status"].removeClass("-mode--collapsed");
-
-                        setTimeout(() => {
-                            $panel["footer"]["status"].css("height", "").addClass("-mode--collapsed");
-                        }, 4000);
                     }
-                } else {
-                    $panel["footer"]["status"].addClass("-state--warning");
-                    $panel["footer"]["status"]["icon"].text("error");
-                    $panel["footer"]["status"]["text"].text(response["message"]);
 
-                    let message_height = $panel["footer"]["status"]["text"].outerHeight();
-                    $panel["footer"]["status"].height(message_height);
-
-                    $panel["footer"]["status"].removeClass("-mode--collapsed");
+                    last_status = response["status"];
                 }
-
-                last_status = response["status"];
-            }
-
+            });
         });
     };
 
