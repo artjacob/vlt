@@ -67,7 +67,7 @@ const nextDepartures = (station, from_gps = false) => {
 		}
 
 		// Carrega os dados
-		$.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/departures?callback=?", {
+		$.getJSON(endpoints["departures"], {
 			"station": station["id"],
 			"env": env
 		}).done((response) => {

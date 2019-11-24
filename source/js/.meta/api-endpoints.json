@@ -1,0 +1,10 @@
+{
+	"departures": {
+		"development": "http://localhost:5000/vltcarioca/us-central1/departures?callback=?",
+		"production": "https://us-central1-vltcarioca.cloudfunctions.net/departures?callback=?"
+	},
+	"status": {
+		"development": "http://localhost:5000/vltcarioca/us-central1/status?callback=?",
+		"production": "https://us-central1-vltcarioca.cloudfunctions.net/status?callback=?"
+	}
+}

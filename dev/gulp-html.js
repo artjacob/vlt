@@ -11,6 +11,7 @@ const config = require("./gulp-config.js");
 const pug = require("gulp-pug");
 const inline = require("gulp-inline-source");
 const rename = require("gulp-rename");
+const fs = require("fs-extra");
 
 let tasks = { };
 
@@ -24,13 +25,21 @@ tasks["watch"] = function watchHTML(done) {
 
 // Stage
 tasks["stage"] = function stageHTML(done) {
-    for (let channel in config["html"]["destination"]) {
+	for (let channel in config["html"]["destination"]) {
+		// Monta lista de endpoints
+		const api = fs.readJsonSync("./source/js/.meta/api-endpoints.json");
+		let endpoints = { };
+
+		Object.keys(api).forEach((endpoint) => { endpoints[endpoint] = api[endpoint][channel] });
+
+		// Processa o arquivo Pug
         src(config["html"]["source"])
             .pipe(plumber())
             .pipe(pug({
                 "pretty": (channel === "development"? " " : false),
                 "locals": {
-                    "env": channel
+					"env": channel,
+					"endpoints": JSON.stringify(endpoints)
                 }
             }))
             .pipe(inline())

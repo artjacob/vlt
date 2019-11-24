@@ -22,7 +22,7 @@ const systemStatus = (() => {
             return false;
         }
 
-        $.getJSON("https://us-central1-vltcarioca.cloudfunctions.net/status?callback=?", {
+		$.getJSON(endpoints["status"], {
             "env": env
         }).done((response) => {
             cue["load-departures"].done(() => {
