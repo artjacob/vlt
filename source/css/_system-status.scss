@@ -11,11 +11,11 @@
     transition: all 0.5s $transition-timing-function;
 
     &.-state--ok {
-        background-color: $safe-color;
+        background-color: #315d32;
     }
 
     &.-state--warning {
-        background-color: #bf360c;
+        background-color: #941818;
     }
 
     &.-mode--collapsed {
