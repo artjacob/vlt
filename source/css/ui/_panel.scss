@@ -3,35 +3,57 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .panel {
+	--panel-background-color: #{$panel-background-color};
+	--panel-text-color: #{$panel-text-color};
+	--panel-accent-text-color: #{$panel-accent-text-color};
+	--panel-shadow-umbra-color: #{$panel-shadow-umbra-color};
+	--panel-shadow-penumbra-color: #{$panel-shadow-penumbra-color};
+	--panel-shadow-ambient-color: #{$panel-shadow-ambient-color};
+	--panel-badge-color: #{$panel-badge-color};
+	--panel-button-color: #{$panel-button-color};
+
+	@media (prefers-color-scheme: dark) {
+		--panel-background-color: #{$panel-dark-background-color};
+		--panel-text-color: #{$panel-dark-text-color};
+		--panel-accent-text-color: #{$panel-dark-accent-text-color};
+		--panel-shadow-umbra-color: #{$panel-dark-shadow-umbra-color};
+		--panel-shadow-penumbra-color: #{$panel-dark-shadow-penumbra-color};
+		--panel-shadow-ambient-color: #{$panel-dark-shadow-ambient-color};
+		--panel-badge-color: #{$panel-dark-badge-color};
+		--panel-button-color: #{$panel-dark-button-color};
+	}
+
+	.-theme--dark & {
+		--panel-background-color: #{$panel-dark-background-color};
+		--panel-text-color: #{$panel-dark-text-color};
+		--panel-accent-text-color: #{$panel-dark-accent-text-color};
+		--panel-shadow-umbra-color: #{$panel-dark-shadow-umbra-color};
+		--panel-shadow-penumbra-color: #{$panel-dark-shadow-penumbra-color};
+		--panel-shadow-ambient-color: #{$panel-dark-shadow-ambient-color};
+		--panel-badge-color: #{$panel-dark-badge-color};
+		--panel-button-color: #{$panel-dark-button-color};
+	}
+
+	////////////////////////////////////////////////////////////////////////////////////////////////
+
 	position: fixed;
 	top: $appbar-size;
 	bottom: 0;
 	left: 0;
 	right: 0;
 	border-radius: $panel-border-radius $panel-border-radius 0 0;
-	background-color: $panel-background-color;
-	color: $panel-text-color;
+	background-color: var(--panel-background-color);
+	color: var(--panel-text-color);
 
 	box-shadow:
-		0 -2px 4px -1px rgba($panel-shadow-color, 0.2),
-		0 -4px 5px 0 rgba($panel-shadow-color, 0.14),
-		0 -1px 10px 0 rgba($panel-shadow-color, 0.12);
+		0 -2px 4px -1px var(--panel-shadow-umbra-color),
+		0 -4px 5px 0 var(--panel-shadow-penumbra-color),
+		0 -1px 10px 0 var(--panel-shadow-ambient-color);
 
 	transition: transform $transition-timing-function 0.24s;
 
 	display: flex;
 	flex-direction: column;
-
-	// Tema escuro
-	@include theme("dark") {
-		background-color: $panel-dark-background-color;
-		color: $panel-dark-text-color;
-
-		box-shadow:
-			0 -2px 4px -1px rgba($panel-dark-shadow-color, 0.2),
-			0 -4px 5px 0 rgba($panel-dark-shadow-color, 0.14),
-			0 -1px 10px 0 rgba($panel-dark-shadow-color, 0.12);
-	}
 
 	// Desktop
 	@include screen("desktop") {
@@ -40,9 +62,9 @@
 		border-radius: 0;
 
 		box-shadow:
-			-2px 0 4px -1px rgba($panel-shadow-color, 0.2),
-			-4px 0 5px 0 rgba($panel-shadow-color, 0.14),
-			-1px 0 10px 0 rgba($panel-shadow-color, 0.12);
+			-2px 0 4px -1px var(--panel-shadow-umbra-color),
+			-4px 0 5px 0 var(--panel-shadow-penumbra-color),
+			-1px 0 10px 0 var(--panel-shadow-ambient-color);
 	}
 
 	// Cabeçalho
@@ -63,11 +85,7 @@
 
 		.title {
 			font-size: 18px;
-			color: $panel-accent-text-color;
-
-			@include theme("dark") {
-				color: $panel-dark-accent-text-color;
-			}
+			color: var(--panel-accent-text-color);
 		}
 
 		.badge {
@@ -159,27 +177,17 @@
 	// Badge
 
 	.status-badge {
-		border: 1px solid $panel-accent-text-color;
+		border: 1px solid var(--panel-accent-text-color);
 		border-radius: 6px;
 		padding: 2px 6px;
 		font-size: 13px;
-		color: $panel-accent-text-color;
+		color: var(--panel-accent-text-color);
 		text-align: center;
 
-		@include theme("dark") {
-			border-color: $panel-dark-accent-text-color;
-			color: $panel-dark-accent-text-color;
-		}
-
 		&.-state--real-time {
-			border-color: $panel-badge-color;
-			color: $panel-badge-color;
+			border-color: var(--panel-badge-color);
+			color: var(--panel-badge-color);
 			text-transform: uppercase;
-
-			@include theme("dark") {
-				border-color: $panel-dark-badge-color;
-				color: $panel-dark-badge-color;
-			}
 		}
 	}
 
@@ -194,26 +202,17 @@
 		justify-content: center;
 
 		.button {
-			border: 1px solid $panel-badge-color;
+			border: 1px solid var(--panel-badge-color);
 			border-radius: $panel-border-radius * 0.75;
 			padding: 9px 15px;
-			color: $panel-badge-color;
+			color: var(--panel-badge-color);
 
 			display: flex;
 			align-items: center;
 			justify-content: center;
 
-			@include theme("dark") {
-				border-color: $panel-dark-badge-color;
-				color: $panel-dark-badge-color;
-			}
-
 			&:hover {
-				background-color: rgba($panel-badge-color, 0.1);
-
-				@include theme("dark") {
-					background-color: rgba($panel-dark-badge-color, 0.1);
-				}
+				background-color: var(--panel-button-color);
 			}
 
 			span {
@@ -246,11 +245,7 @@
 			padding: 12px 36px 36px;
 			font-size: 24px;
 			order: 3;
-			color: $panel-accent-text-color;
-
-			@include theme("dark") {
-				color: $panel-dark-accent-text-color;
-			}
+			color: var(--panel-accent-text-color);
 		}
 
 		i {

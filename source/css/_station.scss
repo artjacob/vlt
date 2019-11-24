@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// station ///////////////////////////////////////////////////////////////////////////////////////////
+// station /////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .panel .station {
@@ -21,16 +21,12 @@
 		height: $appbar-size;
 		padding: 0 18px;
 		font-size: 18px;
-		color: $panel-accent-text-color;
+		color: var(--panel-accent-text-color);
 		cursor: default;
 
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-
-		@include theme("dark") {
-			color: $panel-dark-accent-text-color;
-		}
 	}
 
 	// Sentidos
@@ -42,11 +38,7 @@
 		padding-left: 44px;
 		padding-bottom: 4px;
 		font-size: 16px;
-		color: $panel-accent-text-color;
-
-		@include theme("dark") {
-			color: $panel-dark-accent-text-color;
-		}
+		color: var(--panel-accent-text-color);
 	}
 
 	// Trem
@@ -95,19 +87,14 @@
 		order: 1;
 
 		.button {
-			border: 1px solid $panel-accent-text-color;
+			border: 1px solid var(--panel-accent-text-color);
 			border-radius: $panel-border-radius * 0.75;
 			padding: 9px 15px 9px 12px;
-			color: $panel-accent-text-color;
+			color: var(--panel-accent-text-color);
 
 			display: inline-flex;
 			align-items: center;
 			justify-content: flex-start;
-
-			@include theme("dark") {
-				border-color: $panel-dark-accent-text-color;
-				color: $panel-dark-accent-text-color;
-			}
 		}
 
 		i {
@@ -120,6 +107,7 @@
 		}
 	}
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 @keyframes approaching {

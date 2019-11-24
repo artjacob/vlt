@@ -15,14 +15,20 @@ $navigation-hover-background-color: rgba(#fff, 0.1);
 $panel-background-color: #fff;
 $panel-text-color: #000;
 $panel-accent-text-color: #525252;
-$panel-shadow-color: #000;
+$panel-shadow-umbra-color: rgba(#000, 0.2);
+$panel-shadow-penumbra-color: rgba(#000, 0.14);
+$panel-shadow-ambient-color: rgba(#000, 0.12);
 $panel-badge-color: $primary-color;
+$panel-button-color: rgba($panel-badge-color, 0.1);
 
 $panel-dark-background-color: #212121;
 $panel-dark-text-color: #fff;
 $panel-dark-accent-text-color: #b1b1b1;
-$panel-dark-shadow-color: #000;
+$panel-dark-shadow-umbra-color: rgba(#000, 0.2);
+$panel-dark-shadow-penumbra-color: rgba(#000, 0.14);
+$panel-dark-shadow-ambient-color: rgba(#000, 0.12);
 $panel-dark-badge-color: #0af;
+$panel-dark-button-color: rgba($panel-dark-badge-color, 0.1);
 
 // Outros
 $loading-animation-color: #0af;
@@ -44,20 +50,50 @@ $desktop-navigation-width: 400px;
 	outline: 3px dashed rgba($color, 0.75);
 }
 
-@mixin theme($title) {
-	.-theme--#{$title} & {
-		@content;
-	}
+// @mixin theme($title) {
+// 	.-theme--#{$title} & {
+// 		@content;
+// 	}
 
-	@media (prefers-color-scheme: dark) {
-		@content;
-	}
-}
+// 	@media (prefers-color-scheme: dark) {
+// 		@content;
+// 	}
+// }
 
 @mixin screen($size) {
 	@if ($size == "-desktop") {
 		@media (min-width: 768px) {
 			@content;
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@mixin scroll($color: #000) {
+	&::-webkit-scrollbar {
+		width: 12px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: rgba($color, 0.075);
+	}
+
+	&::-webkit-scrollbar-thumb:hover {
+		background-color: rgba($color, 0.1);
+	}
+
+	&::-webkit-scrollbar-thumb:active {
+		background-color: rgba($color, 0.2);
+	}
+
+	&:hover {
+		&::-webkit-scrollbar {
+			width: 12px;
+		}
+
+		&::-webkit-scrollbar-track {
+			background-color: rgba($color, 0.025);
 		}
 	}
 }

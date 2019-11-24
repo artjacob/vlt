@@ -12,6 +12,8 @@
 		left: 0;
 		width: $desktop-navigation-width;
 		overflow: auto;
+
+		@include scroll(#fff);
 	}
 
     // Cabeçalho
