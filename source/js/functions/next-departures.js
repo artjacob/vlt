@@ -50,7 +50,7 @@ const nextDepartures = (station, from_gps = false) => {
 		if (seconds_since_update <= 60) {
 			$badge.addClass("-state--real-time").text(L10n[language]["real-time"]);
 		} else {
-			let last_updated = L10n[language]["updated"] + " " + moment(departures["lastUpdated"]).fromNow(true) + " " + L10n[language]["ago"];
+			let last_updated = L10n[language]["updated"] + " " + moment(departures["lastUpdated"]).fromNow();
 			$badge.text(last_updated);
 		}
 
