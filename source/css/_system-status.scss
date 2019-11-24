@@ -3,35 +3,39 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 .panel-footer .status {
-    border-radius: $panel-border-radius $panel-border-radius 0 0;
-    background-color: $primary-color;
-    color: #fff;
-    position: relative;
+	border-radius: $panel-border-radius $panel-border-radius 0 0;
+	background-color: $primary-color;
+	color: #fff;
+	position: relative;
 
-    transition: all 0.5s $transition-timing-function;
+	transition: all 0.5s $transition-timing-function;
 
-    &.-state--ok {
-        background-color: #315d32;
-    }
+	&.-state--ok {
+		background-color: #315d32;
+	}
 
-    &.-state--warning {
-        background-color: #941818;
-    }
+	&.-state--warning {
+		background-color: #941818;
+	}
 
-    &.-mode--collapsed {
-        height: 4px;
-        border-radius: 0;
-        order: 3;
-    }
+	&.-mode--collapsed {
+		height: 4px;
+		border-radius: 0;
+		order: 3;
+	}
 
-    .icon {
-        position: absolute;
-        top: 12px;
-        left: 18px;
-        font-size: 32px;
-    }
+	.icon {
+		position: absolute;
+		top: 12px;
+		left: 18px;
+		font-size: 32px;
+	}
 
-    .text {
-        padding: 17px 24px 17px 64px;
-    }
+	.text {
+		padding: 17px 24px 17px 64px;
+
+		strong {
+			font-weight: 700;
+		}
+	}
 }

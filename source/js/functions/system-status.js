@@ -48,7 +48,7 @@ const systemStatus = (() => {
                     } else {
                         $panel["footer"]["status"].addClass("-state--warning");
                         $panel["footer"]["status"]["icon"].text("error");
-                        $panel["footer"]["status"]["text"].text(response["message"]);
+                        $panel["footer"]["status"]["text"].html(response["message"]);
 
                         let message_height = $panel["footer"]["status"]["text"].outerHeight();
                         $panel["footer"]["status"].height(message_height);
