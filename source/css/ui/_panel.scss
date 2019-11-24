@@ -107,11 +107,11 @@
 		flex-shrink: 0;
 
 		.status {
-			order: 1;
+			order: 2;
 		}
 
 		.network {
-			order: 2;
+			order: 1;
 		}
 	}
 
@@ -119,6 +119,7 @@
 
 	.station,
 	.closed,
+	.offline,
 	.permission,
 	.loading {
 		display: none;
@@ -158,6 +159,21 @@
 
 	&.-state--closed {
 		.closed {
+			display: flex;
+		}
+
+		.panel-header .title,
+		.panel-header .badge {
+			display: none;
+		}
+
+		.panel-footer .status {
+			display: none;
+		}
+	}
+
+	&.-state--offline {
+		.offline {
 			display: flex;
 		}
 

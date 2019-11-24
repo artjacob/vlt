@@ -2,7 +2,7 @@ doctype html
 html(lang="pt-br")
 	head
 		meta(charset="utf-8")
-		title Horários
+		title VLT Carioca – Horários
 
 		meta(name="description", content="Horário dos próximos trens do VLT Carioca")
 
@@ -58,16 +58,19 @@ html(lang="pt-br")
 			.panel-content
 				.station
 				.closed
+				//- .offline
 				.permission
 					a.button(href="#")
 						i.material-icons near_me
 						span
 				.loading: .animation
 			.panel-footer
+				.network
+					.icon.material-icons
+					.text
 				.status.-mode--collapsed
 					.icon.material-icons
 					.text
-				.network
 
 	//- ////////////////////////////////////////////////////////////////////////////////////////////
 

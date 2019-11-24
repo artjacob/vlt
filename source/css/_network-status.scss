@@ -1,0 +1,30 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// network status //////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+.panel-footer .network {
+	margin-bottom: -10px;
+	border-radius: $panel-border-radius $panel-border-radius 0 0;
+	padding-bottom: 10px;
+	background-color: #422e1f;
+    color: #fff;
+	position: relative;
+	display: none;
+
+    transition: all 0.5s $transition-timing-function;
+
+    &.-state--offline {
+        display: block;
+    }
+
+    .icon {
+        position: absolute;
+        top: 12px;
+        left: 18px;
+        font-size: 32px;
+    }
+
+    .text {
+        padding: 17px 24px 17px 64px;
+    }
+}

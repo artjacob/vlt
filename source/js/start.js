@@ -26,6 +26,8 @@ $(function() {
 	$panel["footer"]["status"]["icon"] = $(".icon", $panel["footer"]["status"]);
 	$panel["footer"]["status"]["text"] = $(".text", $panel["footer"]["status"]);
 	$panel["footer"]["network"] = $(".network", $panel["footer"]);
+	$panel["footer"]["network"]["icon"] = $(".icon", $panel["footer"]["network"]);
+	$panel["footer"]["network"]["text"] = $(".text", $panel["footer"]["network"]);
 
 	cue["load-document"].resolve();
 
@@ -83,7 +85,8 @@ if ("serviceWorker" in navigator) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Estado da conexão
 $(function() {
-	$panel["footer"]["network"].text(L10n[language]["offline"]);
+	$panel["footer"]["network"]["icon"].text("cloud_off");
+	$panel["footer"]["network"]["text"].text(L10n[language]["offline"]);
 });
 
 const updateConnectionStatus = () => {

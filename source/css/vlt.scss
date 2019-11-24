@@ -151,21 +151,23 @@ a {
 // 	color: $safe-color;
 // }
 
-.network {
-	// position: fixed;
-	// bottom: 0;
-	// left: 0;
-	// right: 0;
-	padding: 12px 20px;
-	background-color: #333;
-	color: #fff;
-	display: none;
+// .network {
+// 	// position: fixed;
+// 	// bottom: 0;
+// 	// left: 0;
+// 	// right: 0;
+// 	margin-bottom: -10px;
+// 	border-radius: $panel-border-radius $panel-border-radius 0 0;
+// 	padding: 12px 20px 22px;
+// 	background-color: #333;
+// 	color: #fff;
+// 	// display: none;
 
-	&.-state--offline {
-		background-color: $danger-color;
-		display: block;
-	}
-}
+// 	&.-state--offline {
+// 		// background-color: $danger-color;
+// 		display: block;
+// 	}
+// }
 
 @import "ui/panel";
 @import "ui/navigation";
@@ -174,5 +176,6 @@ a {
 @import "station";
 @import "list";
 @import "system-status";
+@import "network-status";
 @import "loading";
 @import "settings";
