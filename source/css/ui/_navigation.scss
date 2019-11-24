@@ -107,8 +107,9 @@
    	////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Modos
-    .-mode--list &,
-	.-mode--initial & {
+    // .-mode--list &,
+	// .-mode--initial & {
+    .-mode--list & {
 		.navigation-header {
 			.station-name {
 				display: none;

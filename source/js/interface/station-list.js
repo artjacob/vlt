@@ -3,15 +3,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const stationList = () => {
+	$navigation["header"]["station-name"].text(L10n[language]["stations"]);
 	$navigation["header"]["placeholder"].text(L10n[language]["stations"]);
 
 	// Botão para localizar estação mais próxima
-	let $nearest = $("<a />").attr("href", "#").on("click", (event) => {
-		event.preventDefault();
-		$(".stations h1 .station-name").text("");
-		$("body").removeClass("-mode--list");
-		getLocation();
-	}).appendTo($navigation["content"]["stations"]);
+	let $nearest = $("<a />")
+		.attr("href", "#")
+		.on("click", (event) => {
+			event.preventDefault();
+			$(".stations h1 .station-name").text("");
+			$("body").removeClass("-mode--list");
+			getLocation();
+		})
+		.appendTo($navigation["content"]["stations"]);
 	$("<i />").addClass("material-icons").text("near_me").appendTo($nearest);
 	$("<span />").text(L10n[language]["find-nearest-station"]).appendTo($nearest);
 
