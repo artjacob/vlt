@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "app.web.vltcarioca",
+            "sha256_cert_fingerprints": [
+                "01:9D:CC:44:8C:57:66:57:72:8D:D3:B1:6B:B9:8D:59:97:B7:67:C1:1C:AE:8F:37:5A:02:02:85:82:B0:5D:7A"
+            ]
+        }
+    }
+]
