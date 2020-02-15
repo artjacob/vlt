@@ -24,5 +24,6 @@ A localização exata do usuário é usada apenas dentro de seu próprio aparelh
 
 ## Roadmap
 Próximos recursos a serem implementados:
-- Detecção do idioma do usuário e localização da interface em inglês e espanhol
 - Versão desktop
+- Opção de alterar o idioma pela interface (hoje segue o idioma do sistema, não é possível alterar no app)
+- Tradução do status do sistema para inglês e espanhol com alguma API de tradução (Google Cloud Translation, Amazon Translate...)
