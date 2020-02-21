@@ -114,8 +114,9 @@ exports.status = functions.runWith(runtime_options).https.onRequest((req, res) =
 	];
 
 	const fixMessage = (message) => {
-		// Retira "Operação:" do começo
+		// Retira "Operação:" e traços do começo
 		message = message.replace(/^Operação: /, "");
+		message = message.replace(/^[-–—][\s]?/, "");
 
 		// Corrige espaços a mais
 		message = message.replace(/(\s)+/g, " ");
@@ -123,6 +124,10 @@ exports.status = functions.runWith(runtime_options).https.onRequest((req, res) =
 		// Corrige falta de espaço apõs pontuação
 		message = message.replace(/, /g, ",").replace(/,/g, ", ");
 		message = message.replace(/\. /g, ".").replace(/\./g, ". ");
+
+		// Corrige espaço extra antes de pontuação
+		message = message.replace(/ ,/g, ",");
+		message = message.replace(/ \./g, ".");
 
 		// Retira espaços e pontuação do começo e do final
 		message = message.replace(/^\s/g, "");
