@@ -10,7 +10,7 @@ const config = require("./gulp-config.js");
 // Módulos específicos para CSS
 const sass = require("gulp-sass");
 const groupMediaQueries = require("gulp-group-css-media-queries");
-const cssnano = require("gulp-cssnano");
+const csso = require("gulp-csso");
 const browserSync = require("browser-sync").get("gulp");
 
 let tasks = { };
@@ -29,7 +29,7 @@ tasks["stage"] = function stageCSS(done) {
         .pipe(plumber())
         .pipe(sass({ outputStyle: "expanded" }))
         .pipe(groupMediaQueries())
-        .pipe(cssnano({ autoprefixer: { add: true, browsers: ["> 1%"] }, zindex: true }))
+        .pipe(csso())
         .pipe(dest(config["css"]["destination"]["development"], { sourcemaps: true, mode: "0644" }))
         .pipe(browserSync.stream());
 
