@@ -76,6 +76,14 @@ const status = {
 		"status": "Em atenção",
 		"message": "Operação:    Linha 02 operando parcialmente.       Linha 03 fora de serviço."
 	},
+	"warning-4": {
+		"status": "Em atenção",
+		"message": "Atenção as alterações: Linha 1 trafegando de praia formosa a parada dos Museus devido a blocos carnavalescos no local. linhas 2 de Praia Formosa a colombo e linha 3 temporariamente fora de circulação devido um bloco carnavalesco na Marechal Floriano"
+	},
+	"warning-5": {
+		"status": "Em atenção",
+		"message": "Linha 1 trafegando de praia formosa a parada dos Navios devido a blocos carnavalescos no local. linhas 2 de Praia Formosa a colombo e linha 3 trafegando de Central ate Santa Rita"
+	},
 };
 
 module.exports = { departures, status };

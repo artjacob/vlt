@@ -125,26 +125,20 @@ exports.status = functions.runWith(runtime_options).https.onRequest((req, res) =
 		message = message.replace(/, /g, ",").replace(/,/g, ", ");
 		message = message.replace(/\. /g, ".").replace(/\./g, ". ");
 
-		// Corrige espaço extra antes de pontuação
-		message = message.replace(/ ,/g, ",");
-		message = message.replace(/ \./g, ".");
-
 		// Retira espaços e pontuação do começo e do final
 		message = message.replace(/^\s/g, "");
 		message = message.replace(/\s$/g, "");
 		message = message.replace(/\.$/g, "");
 
-		// Corrige capitalização dos nomes das estações
-		stations.forEach((station) => {
-			message = message.replace(RegExp(station, "gi"), station);
-		});
-
 		// Corrige algarismos a mais nos nomes das linhas
 		message = message.replace(/(Linha 0)/gi, "Linha ");
 
 		// Se "Linha" aparecer em começo de frase, coloca em negrito
-		message = message.replace(/^(Linha \d*)/gi, "<strong>$1:</strong>");
-		message = message.replace(/. (Linha \d*)/gi, ". <strong>• $1:</strong>");
+		message = message.replace(/^Linha(s?) (\d*)( e \d*)?/gi, "<strong>Linha$1 $2$3:</strong>");
+		message = message.replace(/. Linha(s?) (\d*)( e \d*)?/gi, ". <strong>• Linha$1 $2$3:</strong>");
+
+		// Se estiver escrito "Linhas" mas só houver 1 linha, coloca no singular
+		message = message.replace(/Linhas (\d*):/gi, "Linha $1:");
 
 		// Remove abreviação de estação
 		message = message.replace(/(Est\. )/gi, "");
@@ -152,12 +146,25 @@ exports.status = functions.runWith(runtime_options).https.onRequest((req, res) =
 		// Troca " x " por " — "
 		message = message.replace(/( x )/gi, " — ");
 
+		// Corrige espaço extra antes de pontuação
+		message = message.replace(/ ,/g, ",");
+		message = message.replace(/ \./g, ".");
+
+		// Correções que envolvem nome das estações
+		stations.forEach((station) => {
+			// Corrige capitalização dos nomes das estações
+			message = message.replace(RegExp(station, "gi"), station);
+
+			// "até [nome de estação]" vira "a [nome de estação]"
+			message = message.replace(RegExp("at(é|e) " + station, "gi"), "a " + station);
+		});
+
 		return message;
 	};
 
 	const data = new Promise((resolve) => {
 		if (env === "development") {
-			const test_message = "warning-2";
+			const test_message = "warning-5";
 			resolve({
 				"status": samples["status"][test_message]["status"],
 				"raw-message": samples["status"][test_message]["message"],
